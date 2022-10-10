@@ -50,13 +50,49 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
   const departureHandleChange = (newValue) => {
     setDeparture(newValue);
   };
-  const onChangeRoomQuantity = (newValue) => {
-    setRoomQuantity(newValue)
+  const onChangeRoomQuantity = (e) => {
+    setRoomQuantity(e.target.value)
   };
 
   const onChangeFirstName = (e) => {
     setFirstName(e.target.value)
   };
+
+  const onChangeLastName = (e) => {
+    setLastName(e.target.value)
+  };
+
+  const onChangeEmail = (e) => {
+    setEmailName(e.target.value)
+  };
+
+  const onChangePhone = (e) => {
+    setPhone(e.target.value)
+  };
+
+  const onChangeStreetName = (e) => {
+    setStreetName(e.target.value)
+  };
+
+  const onChangeStreetNumber = (e) => {
+    setStreetNumber(e.target.value)
+  };
+
+  const onChangeZip = (e) => {
+    setZip(e.target.value)
+  }
+
+  const onChangeState = (e) => {
+    setStateName(e.target.value)
+  }
+
+  const onChangeCity = (e) => {
+    setCity(e.target.value)
+  }
+
+  const onChangeNote = (e) => {
+    setNote(e.target.value)
+  }
 
   const label1 = { inputProps: { 'aria-label': 'Send me a remainder' } };
   const label2 = { inputProps: { 'aria-label': 'Subscribe to newsletter' } };
@@ -124,9 +160,10 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant="standard"
             defaultValue={roomQuantity}
-          // onChange={onChangeRoomQuantity}
+            onChange={onChangeRoomQuantity}
+            error={roomQuantity === "" || roomQuantity < 1 || roomQuantity > 4}
+            helperText={roomQuantity === "" || roomQuantity <  0 || roomQuantity > 4 ? 'Maximum: 5' : ' '}
           />
-          <InputLabel id="demo-simple-select-label">Maximum: 5</InputLabel>
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <TextField type="text"
@@ -137,8 +174,10 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             variant="standard"
             defaultValue={firstName}
             onChange={onChangeFirstName}
+            error={firstName === "" || firstName.length > 50}
+            helperText={firstName === "" || firstName.length > 50 ? 'Please enter your First Name' : ' '}
           />
-          <InputLabel id="demo-simple-select-label">2/5</InputLabel>
+          <InputLabel id="demo-simple-select-label">{firstName.length +'/50'}</InputLabel>
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <TextField type="text"
@@ -148,9 +187,11 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={lastName}
-          // onChange={onChange}
+            onChange={onChangeLastName}
+            error={lastName === "" || lastName.length > 50}
+            helperText={lastName === "" || lastName.length > 50 ? 'Please enter your Last Name' : ' '}
           />
-          <InputLabel id="demo-simple-select-label">3/50</InputLabel>
+          <InputLabel id="demo-simple-select-label">{lastName.length +'/50'}</InputLabel>
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <TextField type="text"
@@ -160,7 +201,9 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={email}
-          // onChange={onChange}
+            error={email === ""}
+            helperText={email === "" ? 'Please enter Email' : ' '}
+            onChange={onChangeEmail}
           />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
@@ -171,7 +214,9 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={phone}
-          // onChange={onChange}
+            onChange={onChangePhone}
+            error={phone === "" || phone.length > 10}
+            helperText={phone === "" || phone.length > 10 ? 'Please enter your Phone Number' : ' '}
           />
           <InputLabel id="demo-simple-select-label">Add your country code first</InputLabel>
         </Grid>
@@ -183,7 +228,9 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={streetName}
-          // onChange={onChange}
+            onChange={onChangeStreetName}
+            error={streetName === ""}
+            helperText={streetName === "" ? 'Please enter your Street name' : ' '}
           />
         </Grid>
         <Grid item xs={9} md={9} lg={9}>
@@ -194,7 +241,10 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={streetNumber}
-          // onChange={onChange}
+            onChange={onChangeStreetNumber}
+            error={streetNumber === "" || streetNumber.length > 10}
+            helperText={streetNumber === "" || streetNumber.length > 10 ? 'Please enter your Street number' : ' '}
+          
           />
         </Grid>
         <Grid item xs={2} md={2} lg={2}>
@@ -205,7 +255,9 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={zip}
-          // onChange={onChange}
+            onChange={onChangeZip}
+            error={zip === ""}
+            helperText={zip === "" ? 'Please enter your Zip Code' : ' '}
           />
         </Grid>
         <Grid item xs={2} md={2} lg={2}>
@@ -216,9 +268,11 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={stateName}
-          // onChange={onChange}
+            onChange={onChangeState}
+            error={state === ""}
+            helperText={state === "" ? 'Please enter your State' : ' '}
           />
-          <InputLabel id="demo-simple-select-label">AutoComplete</InputLabel>
+          {/* <InputLabel id="demo-simple-select-label">AutoComplete</InputLabel> */}
         </Grid>
         <Grid item xs={2} md={2} lg={2}>
           <TextField type="text"
@@ -228,9 +282,11 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={city}
-          // onChange={onChange}
+            onChange={onChangeCity}
+            error={city === ""}
+            helperText={city === "" ? 'Please enter your City' : ' '}
           />
-          <InputLabel id="demo-simple-select-label">Maximum: 5</InputLabel>
+          {/* <InputLabel id="demo-simple-select-label">Maximum: 5</InputLabel> */}
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
           <InputLabel id="demo-simple-select-label">Extras</InputLabel>
@@ -299,7 +355,9 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
             aria-describedby="basic-addon2"
             variant={variant}
             defaultValue={note}
-            // onChange={onChange}
+            onChange={onChangeNote}
+            error={note === ""}
+            helperText={note === "" ? 'Please enter your Idm Lab test' : ' '}
           />
         </Grid>
         <Grid item xs={12} md={12} lg={12}>
