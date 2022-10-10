@@ -55,7 +55,6 @@ function ResultsTable({ display, justifyContent, margin, minWidth }) {
                 <TableCell>First Name</TableCell>
                 <TableCell align="right">Last Name</TableCell>
                 <TableCell align="right">View Details</TableCell>
-
               </TableRow>
             </TableHead>
             <TableBody>

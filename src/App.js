@@ -1,85 +1,73 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchPage from './components/search-container/SearchPage';
 import ResultsTable from './components/results-page- container/ResultsTable';
 import { Grid } from '@mui/material';
 import './App.scss';
 import { BehaviorSubject, of, merge } from 'rxjs';
-import { debounceTime, map, distinctUntilChanged, filter, switchMap, catchError } from 'rxjs/operators';
-import { AppContext } from './useContext/context';
+import { map, distinctUntilChanged, filter, switchMap, catchError } from 'rxjs/operators';
 import { useContext } from 'react';
 import { ReservationContext } from "./useContext/context";
 import data from'./reservations.json'
 
 function App() {
-  const [state, dispatch] = useContext(ReservationContext);
-  const [reservationState, setReservationState] = useState({
-    data: [],
-    noResults: true
-  });
+	const [state, dispatch] = useContext(ReservationContext);
+	const [reservationState, setReservationState] = useState({
+		data: [],
+		noResults: true
+	});
+	const [subject, setSubject] = useState(null);
 
-  const [subject, setSubject] = useState(null);
+	useEffect(() => {
+		if(subject === null) {
+			const sub = new BehaviorSubject('');
+			setSubject(sub);
+		} else {
+			const observable = subject.pipe(
+				map(s => s.trim()),
+				distinctUntilChanged(),
+				filter(s => s.length >= 1),
+				filter(s => s.includes('IDM')),
+				switchMap(term =>
+					merge(of({ noResults: false}),
+						of({data, noResults: data.length === 0}))
+				),
+				catchError(e => ({
+					errorMessage: 'An application error occured'
+				}))).subscribe( newState => {
+				setReservationState(s => Object.assign({}, s, newState));
+			});
 
-  useEffect(() => {
-    if (subject === null) {
-      const sub = new BehaviorSubject('');
-      setSubject(sub);
-    } else {
-      const observable = subject.pipe(
-        map(s => s.trim()),
-        distinctUntilChanged(),
-        filter(s => s.length >= 1),
-        filter(s => s.includes('IDM')),
-        switchMap(term =>
-          merge(
-            of({ noResults: true }),
-            of({ data, noResults: data.length === 0 })
-          )
-        ),
-        catchError(e => ({
-          errorMessage: 'An application error occured'
-        }))
-      ).subscribe(newState => {
-        setReservationState(s => Object.assign({}, s, newState));
-      });
+			return () => {
+				observable.unsubscribe()
+				subject.unsubscribe();
+			}
+		}
+	}, [subject]);
 
-      return () => {
-        observable.unsubscribe()
-        subject.unsubscribe();
-      }
-    }
-  }, [subject]);
+	useEffect(() => {
+		dispatch({
+			type: "ADD_RESERVATION",
+			payload: reservationState
+		});
 
-  useEffect(() => {
- dispatch({
-    type: "ADD_RESERVATION",
-    payload: reservationState
-  });
+	}, [reservationState]);
 
-  }, [reservationState]);
+	const onChange = e => {
+		if(e.target.value.length === 0) {
+			setReservationState({
+				data: [],
+				noResults: true
+			})
+		} else {
+			return subject.next(e.target.value);
+		}
+	};
 
-  const onChange = e => {
-    if (e.target.value.length === 0) {
-      setReservationState({
-        data: [],
-        noResults: true
-      })
-    } else {
-      setReservationState({
-        data: data,
-        noResults: false
-      })
-      return subject.next(e.target.value);
-    }
-  };
-  console.log("state",state)
-  return (
-
-      <Grid container className="app-container">
-        <SearchPage onChange={onChange} />
-        <ResultsTable data={state.reservations}/>
-      </Grid>
-
-  );
+	return (
+		<Grid container className="app-container">
+			<SearchPage onChange={onChange} />
+			<ResultsTable />
+		</Grid>
+	);
 }
-
 export default App;
