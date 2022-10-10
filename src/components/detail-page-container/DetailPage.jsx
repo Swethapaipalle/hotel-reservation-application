@@ -14,9 +14,9 @@ import { ReservationContext } from "../../useContext/context";
 
 export default function DetailPage({ data, marginBotton, width, variant }) {
   console.log("data", data)
-  const [arrival, setArrival] = React.useState(dayjs(data.stay.arrivalDate));
-  const [departure, setDeparture] = React.useState(dayjs(data.stay.departureDate));
-  const [roomSize, setRoomSize] = React.useState(data.room.roomSize);
+  const [arrival, setArrival] = React.useState(dayjs(data?.stay?.arrivalDate));
+  const [departure, setDeparture] = React.useState(dayjs(data?.stay?.departureDate));
+  const [roomSize, setRoomSize] = React.useState(data?.room?.roomSize);
   const [state, dispatch] = useContext(ReservationContext);
   const { reservations, noResults } = state
   console.log("reservations", reservations)
@@ -59,7 +59,7 @@ export default function DetailPage({ data, marginBotton, width, variant }) {
           <InputLabel id="demo-simple-select-label">Room Size</InputLabel>
           <Select
             id="demo-simple-select"
-            value={roomSize}
+            value={roomSize||''}
             label="Room Size"
             variant={variant}
             onChange={handleSelect}
@@ -243,7 +243,7 @@ DetailPage.propTypes = {
   width: PropTypes.string,
   display: PropTypes.string,
   justifyContent: PropTypes.string,
-  marginBottom: PropTypes.number,
+  marginBottom: PropTypes.string,
   variant: PropTypes.string
 };
 

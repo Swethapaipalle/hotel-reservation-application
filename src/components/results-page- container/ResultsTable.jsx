@@ -20,26 +20,34 @@ function ResultsTable({ display, justifyContent, margin, minWidth }) {
   const { reservations, noResults } = state
 
   const handleView = (index) => {
-    console.log("indexview",index)
+    console.log("indexview", index)
     setOpen(true);
     setCurrentReservationData(reservations[index])
   };
   const handleDelete = (index) => {
-    console.log("indexdelete",index)
+    console.log("indexdelete", index)
     setOpen(true);
     setCurrentReservationData(reservations[index])
   };
   const handleEdit = (index) => {
-    console.log("indexedit",index)
+    console.log("indexedit", index)
     setOpen(true);
     setCurrentReservationData(reservations[index])
+  };
+  const handleAdd = () => {
+    setOpen(true);
+    setCurrentReservationData([])
   };
 
   return (
     <Grid container style={{ display: display, justifyContent: justifyContent, margin: margin }}>
-      {noResults && <Grid> No results for this search </Grid>}
+      <Grid item xs={7} md={7} lg={7} sx={{ padding:"20px 30px" }}>
+        <Button variant="outlined" sx={{ marginLeft: margin }} onClick={() => handleAdd()}>
+          Add Reservations
+        </Button>
+      </Grid>
+      {noResults && <Grid item xs={7} md={7} lg={7} sx={{ padding:"20px 60px" }}> No results for this search </Grid>}
       {!noResults && <Grid className="grid">
-
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: minWidth }} aria-label="simple table">
             <TableHead>
@@ -62,10 +70,10 @@ function ResultsTable({ display, justifyContent, margin, minWidth }) {
                     <Button variant="outlined" onClick={() => handleEdit(index)}>
                       EDIT
                     </Button>
-                    <Button variant="outlined" sx={{ marginLeft: margin }}onClick={() => handleDelete(index)}>
+                    <Button variant="outlined" sx={{ marginLeft: margin }} onClick={() => handleDelete(index)}>
                       DELETE
                     </Button>
-                    <Button variant="outlined"sx={{ marginLeft: margin }} onClick={() => handleView(index)}>
+                    <Button variant="outlined" sx={{ marginLeft: margin }} onClick={() => handleView(index)}>
                       VIEW
                     </Button>
                   </TableCell>

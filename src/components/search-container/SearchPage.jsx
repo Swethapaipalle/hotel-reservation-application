@@ -18,7 +18,6 @@ function SearchPage({ onChange, label, size, margin, display, justifyContent }) 
         <Grid item xs={size} md={size} lg={size}>
           <Typography variant="h3" gutterBottom>Hotel Reservation System</Typography>
           <TextField type="text"
-            fullwidth
             label={label}
             aria-label="Search icons"
             aria-describedby="basic-addon2"
@@ -45,7 +44,7 @@ SearchPage.propTypes = {
 };
 
 SearchPage.defaultProps = {
-  size: '6',
+  size: 6,
   onChange: undefined,
   display: 'flex',
   justifyContent: 'center',

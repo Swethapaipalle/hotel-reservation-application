@@ -24,7 +24,6 @@ function App() {
       const sub = new BehaviorSubject('');
       setSubject(sub);
     } else {
-      console.log("else")
       const observable = subject.pipe(
         map(s => s.trim()),
         distinctUntilChanged(),
@@ -51,7 +50,6 @@ function App() {
   }, [subject]);
 
   useEffect(() => {
-  console.log("reservationState",reservationState)
  dispatch({
     type: "ADD_RESERVATION",
     payload: reservationState
