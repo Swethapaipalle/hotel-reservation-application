@@ -1,0 +1,29 @@
+.search-container {
+    display: flex !important;
+    justify-content: center;
+
+
+    .search-input {
+        padding: 25px;
+        height: 40px;
+        width: 50% !important;
+        margin:0 auto;
+
+    }
+
+    input {
+        width: 65% !important;
+        height: 30px;
+        margin: 10px 10px 0px 100px;
+       }
+
+    .search-button {
+        font-family: sans-serif;
+        font-size: 20px;
+        text-transform: lowercase;
+        border: 1px solid black;
+        border-radius: 15px;
+        height: 25px;
+        color: #000000;
+    }
+}
