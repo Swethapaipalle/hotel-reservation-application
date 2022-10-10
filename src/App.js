@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import SearchPage from './components/search-container/SearchPage';
 import ResultsTable from './components/results-page- container/ResultsTable';
 import { Grid } from '@mui/material';
 import './App.scss';
 import { BehaviorSubject, of, merge } from 'rxjs';
 import { debounceTime, map, distinctUntilChanged, filter, switchMap, catchError } from 'rxjs/operators';
-import data from './reservations.json';
-
+import { AppContext } from './useContext/context';
+import { useContext } from 'react';
+import { ReservationContext } from "./useContext/context";
+import data from'./reservations.json'
 
 function App() {
-  const [state, setState] = useState({
+  const [state, dispatch] = useContext(ReservationContext);
+  const [reservationState, setReservationState] = useState({
     data: [],
-    loading: false,
-    errorMessage: '',
-    noResults: false
+    noResults: true
   });
 
   const [subject, setSubject] = useState(null);
 
   useEffect(() => {
-    if(subject === null) {
+    if (subject === null) {
       const sub = new BehaviorSubject('');
       setSubject(sub);
     } else {
+      console.log("else")
       const observable = subject.pipe(
         map(s => s.trim()),
         distinctUntilChanged(),
@@ -30,17 +32,15 @@ function App() {
         filter(s => s.includes('IDM')),
         switchMap(term =>
           merge(
-            of({loading: true, errorMessage: '', noResults: false}),
-            of({data, loading: false, noResults: data.length === 0})
+            of({ noResults: true }),
+            of({ data, noResults: data.length === 0 })
           )
         ),
         catchError(e => ({
-          loading: false,
           errorMessage: 'An application error occured'
         }))
-      ).subscribe( newState => {
-        console.log('new state' + JSON.stringify(newState));
-        setState(s => Object.assign({}, s, newState));
+      ).subscribe(newState => {
+        setReservationState(s => Object.assign({}, s, newState));
       });
 
       return () => {
@@ -50,34 +50,37 @@ function App() {
     }
   }, [subject]);
 
+  useEffect(() => {
+  console.log("reservationState",reservationState)
+ dispatch({
+    type: "ADD_RESERVATION",
+    payload: reservationState
+  });
+
+  }, [reservationState]);
+
   const onChange = e => {
-    console.log('e ' + e.target.value);
-    console.log('subject ' + subject);
-    if(e.target.value.length === 0) {
-      console.log("data in container", data)
-      setState({
-        data: data,
-        loading: false,
-        errorMessage: '',
-        noResults: false
+    if (e.target.value.length === 0) {
+      setReservationState({
+        data: [],
+        noResults: true
       })
     } else {
-      setState({
-        data: [],
-        loading: false,
-        errorMessage: '',
+      setReservationState({
+        data: data,
         noResults: false
       })
       return subject.next(e.target.value);
     }
   };
-
+  console.log("state",state)
   return (
-    <Grid container className="app-container">
-      <SearchPage loading={state.loading} onChange={onChange} />
-      <ResultsTable data={state.data} errorMessage={state.errorMessage} noResults={state.noResults} />
 
-    </Grid>
+      <Grid container className="app-container">
+        <SearchPage onChange={onChange} />
+        <ResultsTable data={state.reservations}/>
+      </Grid>
+
   );
 }
 

@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { ReservationContextProvider } from "./useContext/context";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <ReservationContextProvider>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ReservationContextProvider>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Grid, Button } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,26 +8,40 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import DetailPage from '../detail-page-container/DetailPage'
+import Modal from '../modal-container/Modal'
+import PropTypes from 'prop-types';
+import { ReservationContext } from "../../useContext/context";
 
-function ResultsTable({ data = [], errorMessage = '', noResults = false }) {
-  console.log("data", data)
-  const [open, setOpen] = React.useState(false);
+function ResultsTable({ display, justifyContent, margin, minWidth }) {
+  const [state, dispatch] = useContext(ReservationContext);
+  // const [reservations, setReservations] = useState([]);
+  const [open, setOpen] = useState(false);
   const [currentReservationData, setCurrentReservationData] = React.useState({});
+  const { reservations, noResults } = state
 
-  const handleClickOpen = (index) => {
+  const handleView = (index) => {
+    console.log("indexview",index)
     setOpen(true);
-    setCurrentReservationData(data[index])
+    setCurrentReservationData(reservations[index])
+  };
+  const handleDelete = (index) => {
+    console.log("indexdelete",index)
+    setOpen(true);
+    setCurrentReservationData(reservations[index])
+  };
+  const handleEdit = (index) => {
+    console.log("indexedit",index)
+    setOpen(true);
+    setCurrentReservationData(reservations[index])
   };
 
   return (
-    <Grid container style={{ margin: "100px 50px 30px 330px" }}>
-      {errorMessage && <div> {errorMessage} </div>}
-      {noResults && <div> No results for this search </div>}
-      <Grid className="grid">
-        {console.log("data", data)}
+    <Grid container style={{ display: display, justifyContent: justifyContent, margin: margin }}>
+      {noResults && <Grid> No results for this search </Grid>}
+      {!noResults && <Grid className="grid">
+
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: minWidth }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>First Name</TableCell>
@@ -37,7 +51,7 @@ function ResultsTable({ data = [], errorMessage = '', noResults = false }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map(({ firstName, lastName },index) => (
+              {reservations.length !== 0 && reservations?.map(({ firstName, lastName }, index) => (
                 <TableRow
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -45,8 +59,14 @@ function ResultsTable({ data = [], errorMessage = '', noResults = false }) {
                   <TableCell component="th" scope="row">{firstName}</TableCell>
                   <TableCell align="right">{lastName}</TableCell>
                   <TableCell align="right">
-                    <Button variant="outlined" onClick={()=>handleClickOpen(index)}>
-                      Details
+                    <Button variant="outlined" onClick={() => handleEdit(index)}>
+                      EDIT
+                    </Button>
+                    <Button variant="outlined" sx={{ marginLeft: margin }}onClick={() => handleDelete(index)}>
+                      DELETE
+                    </Button>
+                    <Button variant="outlined"sx={{ marginLeft: margin }} onClick={() => handleView(index)}>
+                      VIEW
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -54,15 +74,26 @@ function ResultsTable({ data = [], errorMessage = '', noResults = false }) {
             </TableBody>
           </Table>
         </TableContainer>
-        <DetailPage open={open} setOpen={setOpen} currentReservationData={currentReservationData} />
-        {/* { data.map(({firstName, lastName}) =>
-        <div className="card grid-child">
-          <p className="card-text">{firstName + ' ' + lastName}</p>
-        </div>
-        )} */}
-      </Grid>
+        <Modal open={open} setOpen={setOpen} currentReservationData={currentReservationData} />
+      </Grid>}
     </Grid>
   );
 }
 
 export default ResultsTable;
+
+
+ResultsTable.propTypes = {
+  minWidth: PropTypes.string,
+  display: PropTypes.string,
+  justifyContent: PropTypes.string,
+  margin: PropTypes.string,
+
+};
+
+ResultsTable.defaultProps = {
+  minWidth: '750px !important',
+  display: 'flex',
+  justifyContent: 'center',
+  margin: '30px'
+};

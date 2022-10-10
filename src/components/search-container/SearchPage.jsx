@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
-import ResultsTable from '../results-page- container/ResultsTable';
 import { Grid, Button } from '@mui/material';
 import './SearchPage.scss';
+import PropTypes from 'prop-types';
+import { TextField, Typography } from '@mui/material';
 
-function SearchPage({loading, onChange}) {
 
+function SearchPage({ onChange, label, size, margin, display, justifyContent }) {
+  // console.log("props",props)
   return (
     <>
-      <Grid container className="search-container">
-        <Grid item xs={9} md={9} lg={9} className="search-input">
-          <input type="text" 
-          placeholder="Search..." 
-          aria-label="Search icons" 
-          aria-describedby="basic-addon2" 
-          onChange={onChange} />
-          <Button className="search-button">Search</Button>
+      <Grid container className="search-container"
+        style={{
+          display: display,
+          justifyContent: justifyContent,
+          margin: margin
+        }} >
+        <Grid item xs={size} md={size} lg={size}>
+          <Typography variant="h3" gutterBottom>Hotel Reservation System</Typography>
+          <TextField type="text"
+            fullwidth
+            label={label}
+            aria-label="Search icons"
+            aria-describedby="basic-addon2"
+            variant='outlined'
+            onChange={onChange} />
+            <div>Ex:IDM</div>
         </Grid>
       </Grid>
     </>
@@ -23,21 +33,22 @@ function SearchPage({loading, onChange}) {
 
 export default SearchPage;
 
+SearchPage.propTypes = {
+  size: PropTypes.number,
+  label: PropTypes.string,
+  onChange: PropTypes.func,
+  inputColor: PropTypes.string,
+  display: PropTypes.string,
+  justifyContent: PropTypes.string,
+  margin: PropTypes.string,
 
-// import React from 'react';
+};
 
-// function Input({loading, onChange}) {
-//   return (
-//     <div className="input-group mb-3 mt-3">
-//       <input type="text" className="form-control" placeholder="Search..." aria-label="Search icons" aria-describedby="basic-addon2" onChange={onChange} />
-//       <div className="input-group-append">
-//         { loading ?
-//           <span className="input-group-text" id="basic-addon2">Loading...</span> :
-//           <span className="input-group-text" id="basic-addon2">Ready</span>
-//         }
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Input;
+SearchPage.defaultProps = {
+  size: '6',
+  onChange: undefined,
+  display: 'flex',
+  justifyContent: 'center',
+  label: 'Search...',
+  margin: '30px'
+};
