@@ -1,25 +1,26 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
-import { ReservationContextProvider } from "./useContext/context";
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { shallow } from 'enzyme'
-import SearchPage from './components/search-container/SearchPage';
-Enzyme.configure({ adapter: new Adapter() });
+import { render, screen } from "@testing-library/react";
+import { ReservationContextProvider } from "useContext/context";
+import App from "./App";
 
-test('renders Hotel Reservation System', () => {
-  const wrapper = shallow(
-  <ReservationContextProvider>
-    <App />
-  </ReservationContextProvider>)
-  expect(SearchPage).toBeDefined()
-});
-
-test('Renders Hotel Reservation', () => {
+test("renders learn react link", () => {
   render(
     <ReservationContextProvider>
-    <App />
-  </ReservationContextProvider>)
-  const linkElement = screen.getByText(/Hotel Reservation System/i);
-  expect(linkElement).toBeInTheDocument();
+      <App />
+    </ReservationContextProvider>
+  );
+  expect(
+    screen.getByRole("heading", {
+      name: "Hotel Reservation System",
+    })
+  ).toBeDefined();
+  expect(
+    screen.getByRole("textbox", {
+      name: "Search...",
+    })
+  ).toBeDefined();
+  expect(
+    screen.getByRole("button", {
+      name: "Add Reservations",
+    })
+  ).toBeDefined();
 });

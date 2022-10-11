@@ -130,7 +130,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 				},
 				"addressLocation": {
 					"zipCode": zip,
-					"state": state,
+					"state": stateName,
 					"city": city
 				},
 				"extras": extras,
@@ -206,7 +206,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={roomQuantity}
 							onChange={onChangeRoomQuantity}
 							error={roomQuantity === "" || roomQuantity < 1 || roomQuantity > 4}
-							helperText={roomQuantity === "" || roomQuantity < 0 || roomQuantity > 4 ? 'Maximum: 5' : ' '}
+							helperText={!roomQuantity || roomQuantity < 0 || roomQuantity > 4 ? 'Maximum: 5' : ' '}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} lg={12}>
@@ -218,7 +218,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={firstName}
 							onChange={onChangeFirstName}
 							error={firstName === "" || firstName?.length > 50}
-							helperText={firstName === "" || firstName?.length > 50 ? 'Please enter your First Name' : ' '}
+							helperText={!firstName || firstName?.length > 50 ? 'Please enter your First Name' : ' '}
 						/>
 						<InputLabel id="demo-simple-select-label">{firstName?.length + '/50'}</InputLabel>
 					</Grid>
@@ -231,7 +231,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={lastName}
 							onChange={onChangeLastName}
 							error={lastName === "" || lastName?.length > 50}
-							helperText={lastName === "" || lastName?.length > 50 ? 'Please enter your Last Name' : ' '}
+							helperText={!lastName || lastName?.length > 50 ? 'Please enter your Last Name' : ' '}
 						/>
 						<InputLabel id="demo-simple-select-label">{lastName?.length + '/50'}</InputLabel>
 					</Grid>
@@ -256,7 +256,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={phone}
 							onChange={onChangePhone}
 							error={phone === "" || phone?.length > 10}
-							helperText={phone === "" || phone?.length > 10 ? 'Please enter your Phone Number' : ' '}
+							helperText={!phone || phone?.length > 10 ? 'Please enter your Phone Number' : ' '}
 						/>
 						<InputLabel id="demo-simple-select-label">Add your country code first</InputLabel>
 					</Grid>
@@ -269,7 +269,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={streetName}
 							onChange={onChangeStreetName}
 							error={streetName === ""}
-							helperText={streetName === "" ? 'Please enter your Street name' : ' '}
+							helperText={!streetName ? 'Please enter your Street name' : ' '}
 						/>
 					</Grid>
 					<Grid item xs={9} md={9} lg={9}>
@@ -281,7 +281,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={streetNumber}
 							onChange={onChangeStreetNumber}
 							error={streetNumber === "" || streetNumber?.length > 10}
-							helperText={streetNumber === "" || streetNumber?.length > 10 ? 'Please enter your Street number' : ' '}
+							helperText={!streetNumber || streetNumber?.length > 10 ? 'Please enter your Street number' : ' '}
 
 						/>
 					</Grid>
@@ -294,7 +294,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={zip}
 							onChange={onChangeZip}
 							error={zip === ""}
-							helperText={zip === "" ? 'Please enter your Zip Code' : ' '}
+							helperText={!zip ? 'Please enter your Zip Code' : ' '}
 						/>
 					</Grid>
 					<Grid item xs={2} md={2} lg={2}>
@@ -305,8 +305,8 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							variant={variant}
 							defaultValue={stateName}
 							onChange={onChangeState}
-							error={state === ""}
-							helperText={state === "" ? 'Please enter your State' : ' '}
+							error={stateName === ""}
+							helperText={!stateName ? 'Please enter your State' : ' '}
 						/>
 						{/* <InputLabel id="demo-simple-select-label">AutoComplete</InputLabel> */}
 					</Grid>
@@ -319,7 +319,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={city}
 							onChange={onChangeCity}
 							error={city === ""}
-							helperText={city === "" ? 'Please enter your City' : ' '}
+							helperText={!city ? 'Please enter your City' : ' '}
 						/>
 						{/* <InputLabel id="demo-simple-select-label">Maximum: 5</InputLabel> */}
 					</Grid>
@@ -327,7 +327,8 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 						<InputLabel id="demo-simple-select-label">Extras</InputLabel>
 						<Select
 							labelId="mutiple-select-label"
-							value={extras}
+							multiple
+							value={extras||[]}
 							onChange={handleExtrasChange}
 							renderValue={(selected) => selected.join(", ")}
 							MenuProps={MenuProps}
@@ -390,7 +391,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							defaultValue={note}
 							onChange={onChangeNote}
 							error={note === ""}
-							helperText={note === "" ? 'Please enter your Idm Lab test' : ' '}
+							helperText={!note ? 'Please enter your Idm Lab test' : ' '}
 						/>
 					</Grid>
 					<Grid item xs={12} md={12} lg={12}>
