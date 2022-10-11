@@ -25,11 +25,11 @@ function App() {
 			const observable = subject.pipe(
 				map(s => s.trim()),
 				distinctUntilChanged(),
-				filter(s => s.length >= 1),
-				filter(s => s.includes('IDM')),
+				filter(s => s?.length >= 1),
+				filter(s => s?.includes('IDM')),
 				switchMap(term =>
 					merge(of({ noResults: false}),
-						of({data, noResults: data.length === 0}))
+						of({data, noResults: data?.length === 0}))
 				),
 				catchError(e => ({
 					errorMessage: 'An application error occured'
@@ -53,7 +53,7 @@ function App() {
 	}, [reservationState]);
 
 	const onChange = e => {
-		if(e.target.value.length === 0) {
+		if(e.target.value?.length === 0) {
 			setReservationState({
 				data: [],
 				noResults: true

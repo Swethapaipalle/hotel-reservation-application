@@ -63,7 +63,7 @@ function ResultsTable({ display, justifyContent, margin, minWidth }) {
 	  reservations.splice(index, 1)
 	  dispatch({
 		  type: "DELETE_RESERVATION",
-		  payload: {data: reservations, noResults: reservations.length === 0}
+		  payload: {data: reservations, noResults: reservations?.length === 0}
 	  });
   };
   const handleAdd = () => {
@@ -74,12 +74,12 @@ function ResultsTable({ display, justifyContent, margin, minWidth }) {
   return (
     <Grid container style={{ display: display, justifyContent: justifyContent, margin: margin }}>
       <Grid item xs={7} md={7} lg={7} sx={{ padding:"20px 30px" }}>
-        <Button variant="outlined" sx={{ marginLeft: margin }} onClick={handleAdd}>
+        <Button data-testid="button3" variant="outlined" sx={{ marginLeft: margin }} onClick={handleAdd}>
           Add Reservations
         </Button>
       </Grid>
       {noResults && <Grid item xs={7} md={7} lg={7} sx={{ padding:"20px 60px" }}> No results for this search </Grid>}
-      {!noResults && <Grid className="grid">
+      {!noResults && <Grid className="grid" data-testid="table">
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: minWidth }} aria-label="simple table">
             <TableHead>
@@ -91,7 +91,7 @@ function ResultsTable({ display, justifyContent, margin, minWidth }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {reservations.length !== 0 && reservations?.map(({ firstName, lastName }, index) => (
+              {reservations?.length !== 0 && reservations?.map(({ firstName, lastName }, index) => (
                 <TableRow
                   key={index}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -99,10 +99,10 @@ function ResultsTable({ display, justifyContent, margin, minWidth }) {
                   <TableCell component="th" scope="row">{firstName}</TableCell>
                   <TableCell align="right">{lastName}</TableCell>
                   <TableCell align="right">
-                    <Button variant="outlined" onClick={() => handleView(index)}>
+                    <Button data-testid="button1" variant="outlined" onClick={() => handleView(index)}>
                       VIEW
                     </Button>
-                    <Button variant="outlined" sx={{ marginLeft: margin }} onClick={() => handleDelete(index)}>
+                    <Button data-testid="button2" variant="outlined" sx={{ marginLeft: margin }} onClick={() => handleDelete(index)}>
                       DELETE
                     </Button>
                   </TableCell>

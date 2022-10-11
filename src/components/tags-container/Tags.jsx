@@ -52,7 +52,7 @@ export default function InputTags() {
         size='small'
         sx={{ margin: "1rem 0" }}
         margin='none'
-        placeholder={tags.length < 5 ? "Enter tags" : ""}
+        placeholder={tags?.length < 5 ? "Enter tags" : ""}
         InputProps={{
           startAdornment: (
             <Box sx={{ margin: "0 0.2rem 0 0", display: "flex" }}>

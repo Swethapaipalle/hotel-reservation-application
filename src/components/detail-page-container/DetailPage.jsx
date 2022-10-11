@@ -38,7 +38,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 	const [formData, setFormData] = React.useState({});
 
 	const isAllSelected =
-		options.length > 0 && extras.length === options.length;
+		options?.length > 0 && extras?.length === options?.length;
 
 
 	const handleSelect = (event) => {
@@ -100,8 +100,8 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 
 	const handleExtrasChange = (event) => {
 		const value = event.target.value;
-		if (value[value.length - 1] === "all") {
-			setExtras(extras.length === options.length ? [] : options);
+		if (value[value?.length - 1] === "all") {
+			setExtras(extras?.length === options?.length ? [] : options);
 			return;
 		}
 		setExtras(value);
@@ -217,10 +217,10 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							variant="standard"
 							defaultValue={firstName}
 							onChange={onChangeFirstName}
-							error={firstName === "" || firstName.length > 50}
-							helperText={firstName === "" || firstName.length > 50 ? 'Please enter your First Name' : ' '}
+							error={firstName === "" || firstName?.length > 50}
+							helperText={firstName === "" || firstName?.length > 50 ? 'Please enter your First Name' : ' '}
 						/>
-						<InputLabel id="demo-simple-select-label">{firstName.length + '/50'}</InputLabel>
+						<InputLabel id="demo-simple-select-label">{firstName?.length + '/50'}</InputLabel>
 					</Grid>
 					<Grid item xs={12} md={12} lg={12}>
 						<TextField type="text"
@@ -230,10 +230,10 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							variant={variant}
 							defaultValue={lastName}
 							onChange={onChangeLastName}
-							error={lastName === "" || lastName.length > 50}
-							helperText={lastName === "" || lastName.length > 50 ? 'Please enter your Last Name' : ' '}
+							error={lastName === "" || lastName?.length > 50}
+							helperText={lastName === "" || lastName?.length > 50 ? 'Please enter your Last Name' : ' '}
 						/>
-						<InputLabel id="demo-simple-select-label">{lastName.length + '/50'}</InputLabel>
+						<InputLabel id="demo-simple-select-label">{lastName?.length + '/50'}</InputLabel>
 					</Grid>
 					<Grid item xs={12} md={12} lg={12}>
 						<TextField type="text"
@@ -255,8 +255,8 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							variant={variant}
 							defaultValue={phone}
 							onChange={onChangePhone}
-							error={phone === "" || phone.length > 10}
-							helperText={phone === "" || phone.length > 10 ? 'Please enter your Phone Number' : ' '}
+							error={phone === "" || phone?.length > 10}
+							helperText={phone === "" || phone?.length > 10 ? 'Please enter your Phone Number' : ' '}
 						/>
 						<InputLabel id="demo-simple-select-label">Add your country code first</InputLabel>
 					</Grid>
@@ -280,8 +280,8 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							variant={variant}
 							defaultValue={streetNumber}
 							onChange={onChangeStreetNumber}
-							error={streetNumber === "" || streetNumber.length > 10}
-							helperText={streetNumber === "" || streetNumber.length > 10 ? 'Please enter your Street number' : ' '}
+							error={streetNumber === "" || streetNumber?.length > 10}
+							helperText={streetNumber === "" || streetNumber?.length > 10 ? 'Please enter your Street number' : ' '}
 
 						/>
 					</Grid>
@@ -327,7 +327,6 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 						<InputLabel id="demo-simple-select-label">Extras</InputLabel>
 						<Select
 							labelId="mutiple-select-label"
-							multiple
 							value={extras}
 							onChange={handleExtrasChange}
 							renderValue={(selected) => selected.join(", ")}
@@ -349,7 +348,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 										classes={{ indeterminate: { color: "#f50057" } }}
 										checked={isAllSelected}
 										indeterminate={
-											extras.length > 0 && extras.length < options.length
+											extras?.length > 0 && extras?.length < options?.length
 										}
 									/>
 								</ListItemIcon>
@@ -361,7 +360,7 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 							{options.map((option) => (
 								<MenuItem key={option} value={option}>
 									<ListItemIcon>
-										<Checkbox checked={extras.indexOf(option) > -1} />
+										<Checkbox checked={extras?.indexOf(option) > -1} />
 									</ListItemIcon>
 									<ListItemText primary={option} />
 								</MenuItem>

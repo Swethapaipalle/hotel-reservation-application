@@ -3,8 +3,29 @@ import data from './../reservations.json';
 export const ReservationContext = createContext();
 
 const initialState = {
-    reservations: [],
-    noResults:true
+    reservations: [{
+      "stay": {
+          "arrivalDate": "2021-11-18T05:00:00.000Z",
+          "departureDate": "2021-11-25T05:00:00.000Z"
+      },
+      "firstName": "IDM",
+      "lastName": "ENG",
+      "email": "idm.test@idm.com",
+      "phone": "9999999999",
+      "addressStreet": {
+          "streetName": "IDM Street",
+          "streetNumber": "1234"
+      },
+      "addressLocation": {
+          "zipCode": "123456",
+          "state": "Arizona",
+          "city": "OAKVILLE"
+      },
+      "extras": ["extraBreakfast"],
+      "payment": "cc",
+      "note": "",
+  }],
+    noResults:false
 };
 
 const reducer = (state, action) => {
