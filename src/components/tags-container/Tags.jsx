@@ -1,5 +1,6 @@
-import { Cancel, Tag } from "@mui/icons-material";
-import { FormControl, Stack, TextField, Typography } from "@mui/material";
+import React from 'react';
+import { Cancel } from "@mui/icons-material";
+import { Stack, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useRef, useState } from "react";
 
@@ -44,7 +45,9 @@ export default function InputTags() {
     tagRef.current.value = "";
   };
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box      
+    data-testid="tag" 
+    sx={{ flexGrow: 1 }}>
       <TextField
         inputRef={tagRef}
         fullWidth

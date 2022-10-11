@@ -86,9 +86,9 @@
       "!src/components/search-container/SearchPage.stories.jsx",
       "!src/components/results-page-container/ResultsTable.stories.jsx",
       "!src/components/detail-page-container/DetailPage.stories.jsx",
+      "!src/components/tags-container/Tags.jsx",
       "!src/reportWebVitals.js",
       "!src/setupTests.js.js",
-      "!src/reservations.js.js",
       "!src/utils/utils.js"
     ]
   }

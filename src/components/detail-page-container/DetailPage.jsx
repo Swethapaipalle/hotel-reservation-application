@@ -142,7 +142,6 @@ export default function DetailPage({ data, marginBotton, width, variant, handleC
 				"confirm": false
 			}
 		};
-		console.log("dispatch data", data);
 		dispatch({
 			type: "ADD_RESERVATION",
 			payload: data
