@@ -8,21 +8,22 @@ const initialState = {
 };
 
 const reducer = (state, action) => {
-    console.log("state", state)
-    console.log("action", action)
-
     switch (action.type) {
-        case "ADD_RESERVATION":
-            return {
-                reservations: action.payload.data !== undefined ?[...action.payload.data]: [],
-                noResults:action.payload.noResults
-            };
-        case "DEL_RESERVATION":
-            return {
-                reservations: state.reservations.filter(
-                    contact => contact.id !== action.payload
-                )
-            };
+        case "SET_RESERVATION":
+	        return {
+	            reservations: action.payload.data !== undefined ?[...action.payload.data]: [],
+	            noResults:action.payload.noResults
+	        };
+	    case "ADD_RESERVATION":
+        return {
+          reservations: action.payload.data !== undefined ?[...state.reservations, action.payload.data]: [...state.reservations],
+          noResults:action.payload.noResults
+        };
+	    case "DELETE_RESERVATION":
+		    return {
+			    reservations: action.payload.data !== undefined ?[...action.payload.data]: [],
+			    noResults:action.payload.noResults
+		    };
         default:
             throw new Error();
     }

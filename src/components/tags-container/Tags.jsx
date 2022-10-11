@@ -45,28 +45,26 @@ export default function InputTags() {
   };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <form onSubmit={handleOnSubmit}>
-        <TextField
-          inputRef={tagRef}
-          fullWidth
-          variant='standard'
-          size='small'
-          sx={{ margin: "1rem 0" }}
-          margin='none'
-          placeholder={tags.length < 5 ? "Enter tags" : ""}
-          InputProps={{
-            startAdornment: (
-              <Box sx={{ margin: "0 0.2rem 0 0", display: "flex" }}>
-                {tags.map((data, index) => {
-                  return (
-                    <Tags data={data} handleDelete={handleDelete} key={index} />
-                  );
-                })}
-              </Box>
-            ),
-          }}
-        />
-      </form>
+      <TextField
+        inputRef={tagRef}
+        fullWidth
+        variant='standard'
+        size='small'
+        sx={{ margin: "1rem 0" }}
+        margin='none'
+        placeholder={tags.length < 5 ? "Enter tags" : ""}
+        InputProps={{
+          startAdornment: (
+            <Box sx={{ margin: "0 0.2rem 0 0", display: "flex" }}>
+              {tags.map((data, index) => {
+                return (
+                  <Tags data={data} handleDelete={handleDelete} key={index} />
+                );
+              })}
+            </Box>
+          ),
+        }}
+      />
     </Box>
   );
 }

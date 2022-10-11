@@ -18,6 +18,7 @@ function SearchPage({ onChange, label, size, margin, display, justifyContent }) 
         <Grid item xs={size} md={size} lg={size}>
           <Typography variant="h3" gutterBottom>Hotel Reservation System</Typography>
           <TextField type="text"
+           id='carSearch'
             label={label}
             aria-label="Search icons"
             aria-describedby="basic-addon2"

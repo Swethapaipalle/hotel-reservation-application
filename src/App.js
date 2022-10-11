@@ -46,7 +46,7 @@ function App() {
 
 	useEffect(() => {
 		dispatch({
-			type: "ADD_RESERVATION",
+			type: "SET_RESERVATION",
 			payload: reservationState
 		});
 
