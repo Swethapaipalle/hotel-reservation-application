@@ -8,9 +8,9 @@ import { ReservationContextProvider } from "./useContext/context";
 const root = createRoot(document.getElementById('root'))|| document.createElement('div');
 root.render(
   <ReservationContextProvider>
-    <StrictMode>
+    {/* <StrictMode> */}
       <App />
-    </StrictMode>
+    {/* </StrictMode> */}
   </ReservationContextProvider>
 
 );

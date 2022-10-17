@@ -7,7 +7,9 @@ import { BehaviorSubject, of, merge } from 'rxjs';
 import { map, distinctUntilChanged, filter, switchMap, catchError } from 'rxjs/operators';
 import { useContext } from 'react';
 import { ReservationContext } from "./useContext/context";
-import data from'./reservations.json'
+import data from './reservations.json'
+import { searchList } from 'typescript-search';
+
 
 function App() {
 	const [state, dispatch] = useContext(ReservationContext);
@@ -16,9 +18,11 @@ function App() {
 		noResults: true
 	});
 	const [subject, setSubject] = useState(null);
-
 	useEffect(() => {
-		if(subject === null) {
+
+		searchList(data, "list1")
+		// console.log("search",search)
+		if (subject === null) {
 			const sub = new BehaviorSubject('');
 			setSubject(sub);
 		} else {
@@ -28,21 +32,21 @@ function App() {
 				filter(s => s?.length >= 1),
 				filter(s => s?.includes('IDM')),
 				switchMap(term =>
-					merge(of({ noResults: false}),
-						of({data, noResults: data?.length === 0}))
+					merge(of({ noResults: false }),
+						of({ data, noResults: data?.length === 0 }))
 				),
 				catchError(e => ({
 					errorMessage: 'An application error occured'
-				}))).subscribe( newState => {
-				setReservationState(s => Object.assign({}, s, newState));
-			});
+				}))).subscribe(newState => {
+					setReservationState(s => Object.assign({}, s, newState));
+				});
 
 			return () => {
 				observable.unsubscribe()
 				subject.unsubscribe();
 			}
 		}
-	}, [subject]);
+	}, []);
 
 	useEffect(() => {
 		dispatch({
@@ -53,7 +57,7 @@ function App() {
 	}, [reservationState]);
 
 	const onChange = e => {
-		if(e.target.value?.length === 0) {
+		if (e.target.value?.length === 0) {
 			setReservationState({
 				data: [],
 				noResults: true
@@ -65,6 +69,10 @@ function App() {
 
 	return (
 		<Grid container className="app-container">
+			<Grid>
+				<h1> Rendering the below list using Typescript Library</h1>
+				<div id="list1"></div>
+			</Grid>
 			<SearchPage onChange={onChange} />
 			<ResultsTable />
 		</Grid>
